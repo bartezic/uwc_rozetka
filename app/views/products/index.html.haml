@@ -1,0 +1,51 @@
+.panel
+  =form_tag products_path, :method => 'get' do
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search", :name => nil
+
+.row.full-width
+  .large-3.columns
+    = render "products/filters"
+
+  .large-9.columns
+    Список продуктов
+
+    - @products.each do |product|
+      .product.panel.row
+        %header
+          = link_to product.name, product
+        .visual-info.columns.large-3.columns
+          -if product.photos.length>0
+            .logo
+              .img-wrapper
+                = image_tag product.photos[0].image.url(:medium)
+            .images
+              - product.photos.each do |photo|
+                .img-wrapper
+                  = image_tag photo.image.url(:mini_thumb)
+
+          - else
+            .logo
+              .img-wrapper
+                = image_tag "/images/default_image240x240.jpg"
+
+
+        .info.columns.large-9.columns
+          - if product.price.present?
+            .price
+              .uah
+                = product.price.price.exchange_to("UAH")
+                грн.
+
+              .usd
+                = humanized_money_with_symbol product.price.price
+            .rating
+              = product.rating
+              (#{product.reviews.count} відгуків)
+
+
+          .short-features
+            = product.features_short
+            = link_to 'Подробнее', product
+
+          .buy-block

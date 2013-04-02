@@ -1,4 +1,15 @@
 Rozetka::Application.routes.draw do
+  mount RailsAdmin::Engine => '/backoffice', :as => 'rails_admin'
+
+  devise_for :users
+
+  
+
+  resources :products
+  resources :brands
+  root :to => 'products#index'
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

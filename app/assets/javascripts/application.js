@@ -13,3 +13,21 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require "foundation"
+
+$(document).foundation();
+
+var orbit_inited = false;
+
+setTimeout(function(){
+    $("#orbitInit").on("click", function(){
+        setTimeout(function(){
+            if(!orbit_inited){
+                $(document).foundation('orbit');
+                orbit_inited = true;
+
+            }
+            
+        },100);
+    });
+},1000);

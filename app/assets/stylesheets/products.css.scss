@@ -1,0 +1,85 @@
+// Place all the styles related to the Products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.product{
+    margin-bottom: 30px;
+    &.panel {
+        margin-bottom: 1.25em !important;
+    }
+    header {
+        margin: 15px;
+        color: #329A1C;
+        a {
+            color: #329A1C;            
+        }
+    }
+    .visual-info {
+        .img-wrapper {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 4px;
+        }
+        .logo {
+
+        }
+    }
+
+    .info{
+        .price {
+            background: #fdfadc;
+            border-radius: 5px;
+            border-right: 1px solid #e6e3bd;
+            border-bottom: 1px solid #e6e3bd;            
+            padding: .35em .8em;
+            position: relative;
+            margin: 0 .5em .385em -.5em;
+            z-index: 5;
+            display: inline-block;
+        }
+        .rating {
+            background: #fdfadc;
+            border-radius: 5px;
+            border-right: 1px solid #e6e3bd;
+            border-bottom: 1px solid #e6e3bd;            
+            padding: .35em .8em;
+            position: relative;
+            margin: 0 .5em .385em -.5em;
+            z-index: 5;
+            display: inline-block;
+        }
+
+    }
+}
+
+.brand-nav {
+    margin-left:0;
+    li {
+        list-style: none;
+        &.depth-1 {
+            margin-left: 10px;
+        }
+        &.depth-2 {
+            margin-left: 30px;
+        }
+        &.current {
+            a {
+                color: red;
+            }
+        }
+    }
+}
+
+.columns{
+    span {
+        color: #ccc;
+    }
+    a.active {
+        color: green;
+    }
+
+    a.filter-item {
+        color: blue;
+    }    
+}   

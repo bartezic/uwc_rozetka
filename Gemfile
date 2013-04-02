@@ -37,7 +37,7 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem "thin", ">= 1.5.0"
-gem "mysql2", ">= 0.3.11"
+gem 'mysql2', '0.3.12b5'
 gem "haml-rails", ">= 0.4"
 gem "html2haml", ">= 1.0.1", :group => :development
 gem "rspec-rails", ">= 2.12.2", :group => [:development, :test]
@@ -48,3 +48,24 @@ gem "launchy", ">= 2.2.0", :group => :test
 gem "capybara", ">= 2.0.3", :group => :test
 gem "compass-rails", ">= 1.0.3", :group => :assets
 gem "zurb-foundation", ">= 4.0.9", :group => :assets
+gem "figaro", ">= 0.6.3"
+gem "better_errors", ">= 0.7.2", :group => :development
+gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
+gem "libv8", ">= 3.11.8"
+gem "therubyracer", ">= 0.11.3", :group => :assets, :platform => :ruby, :require => "v8"
+
+gem 'devise'
+gem 'rails_admin'
+
+gem 'paperclip'
+gem 'carrierwave'
+gem 'mini_magick'
+gem "rails-settings-cached", "0.2.4"
+gem 'money-rails'
+
+gem 'pry'
+gem 'pry-remote'
+gem 'pry-stack_explorer'
+gem 'pry-debugger'
+
+gem 'thinking-sphinx', '~> 3.0.2'

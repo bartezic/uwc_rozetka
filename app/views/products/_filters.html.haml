@@ -1,0 +1,25 @@
+%header
+    Підбір по параметрах
+= form_tag("/products", :method => "get") do
+    .panel
+        %h4 Бренди
+        - Brand.all.each do |brand|
+            %div
+                - count = @product_filter.count(:brand, brand.name)
+                - if count > 0
+                    = link_to "#{brand.name}(#{count})", @product_filter.formURL(:brand => brand.name), :class => @product_filter.linkClass(:brand, brand.name)
+                -else
+                    %span #{brand.name}(#{count})
+
+    - Feature.where(:in_filter=>true).each do |feature|
+        .panel
+            %h4= feature.name
+
+            - feature.feature_values.each do |value|
+                %div
+                    - count = @product_filter.count(:feature, feature.id, value)
+                    - if count >0
+                        = link_to "#{value}(#{count})", @product_filter.formURL("#{feature.id}" => value), :class => @product_filter.linkClass(:feature, feature.id, value)
+                    - else
+                        %span #{value}(#{count})
+

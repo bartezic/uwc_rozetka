@@ -1,0 +1,196 @@
+%nav.top-bar
+    %section.top-bar-section
+        %ul.right
+            %li
+                = link_to "Products", products_path
+
+.row.full-width
+    .large-3.columns
+        %ul.brand-nav
+            - Brand.includes(:products).each do |brand|
+                %li.depth-1
+                    = link_to brand.name, brand
+                    (#{brand.products.count})
+
+                    - brand.products.each do |product|
+                        %li.depth-2{:class => "#{'current' if product.id==@product.id}"}
+                            = link_to product.name, product
+
+    .large-9.columns
+        .product.panel.row
+            %header
+                = link_to @product.name, @product
+            .visual-info.columns.large-3.columns
+                -if @product.photos.length>0
+                    .logo
+                        .img-wrapper
+                            = image_tag @product.photos[0].image.url(:medium)
+                    .images
+                        - @product.photos.each do |photo|
+                            .img-wrapper
+                                = image_tag photo.image.url(:mini_thumb)
+
+                - else
+                    .logo
+                        .img-wrapper
+                            = image_tag "/images/default_image240x240.jpg"
+
+
+            .info.columns.large-9.columns
+                - if @product.price.present?
+                    .price
+                        .uah
+                            = @product.price.price.exchange_to("UAH")
+                            грн.
+
+                        .usd
+                            = humanized_money_with_symbol @product.price.price
+                    .rating
+                        = @product.rating
+                        (#{@product.reviews.count} відгуків)
+
+
+                    .short-features
+                        = @product.features_short
+                        = link_to 'Подробнее', @product
+
+                    .buy-block
+
+        .panel.row
+            .section-container.auto{"data-section"=>true, "data-options" => "deep_linking: true;"}
+                %section.section.active
+                    %p.title
+                        %a{:href=>"#panel1"} Все
+                    .content
+                        .row
+                            .large-6.columns
+                                %header
+                                    Технічні характеристики
+                                %dl.sub-nav
+                                    %dd.active
+                                        Основні
+                                    %dd
+                                        %a{:href=>"#panel2"} всі xарактеристики
+                                %table
+                                    - @product.primary_features.each do |product_feature|
+                                        %tr
+                                            %td= product_feature.feature.name
+                                            %td= product_feature.value
+
+                                %header Опис #{@product.name}
+                                .panel
+                                    != @product.description
+
+
+                            .large-6.columns
+                                %header
+                                    Відгуки покупців
+                                - @product.reviews.each do |review|
+                                    .panel
+                                        .label.secondary
+                                            Оцінка - #{review.marg}
+                                        .label.success
+                                            = review.name
+                                        .label.secondary
+                                            = review.created_at.strftime("%d %b %y")
+                                        - unless review.comment.blank?
+                                            .panel
+                                                = review.comment
+                %section.section
+                    %p.title
+                        %a{:href=>"#panel2"} Характеристики
+                    .content
+                        %header
+                            Характеристики #{@product.name}
+                        %dl.sub-nav
+                            %dd.active
+                                Основні
+                            %dd
+                                %a{:href=>"#panel2"} всі xарактеристики
+                        %table
+                            - @product.product_features.each do |product_feature|
+                                %tr
+                                    %td= product_feature.feature.name
+                                    %td= product_feature.value
+
+                %section.section.active
+                    %p.title
+                        %a#orbitInit{:href=>"#panel3"} Фото і 3d
+                    .content
+                        %ul{"data-orbit"=>""}
+                            -if @product.photos.length>0
+                                - @product.photos.each do |photo|
+                                    %li
+                                        = image_tag photo.image.url(:original)
+                                        .orbit-caption
+
+                %section.section
+                    %p.title
+                        %a{:href=>"#panel4"} Відгуки
+                    .content
+                        %header
+                            Відгуки покупців
+                        - @product.reviews_with_comments.each do |review|
+                            -if review.comment.present?
+                                .panel
+                                    .label.secondary
+                                        Оцінка - #{review.marg}
+                                    .label.success
+                                        = review.name
+                                    .label.secondary
+                                        = review.created_at.strftime("%d %b %y")
+                                    %br
+                                    - unless review.usefullness.nil?
+                                        .label.success
+                                            #{review.usefullness}% користувачів вважають відгук корисним
+
+                                    .panel
+                                        = review.comment
+
+                                    .label.success
+                                        Відгук корисний? Да(#{review.usefull})/Ні(#{review.unusefull})
+
+                                    - if review.review_comments.count>0
+                                        .panel
+                                            - review.review_comments.each do |comment|
+
+                                                .label.success
+                                                    = comment.username
+                                                .label.secondary
+                                                    = comment.created_at.strftime("%d %b %y")
+                                                .panel
+                                                    = comment.comment
+                %section.section
+                    %p.title
+                        %a{:href=>"#panel5"} Аксесуари
+                    .content
+                        - @product.accessories.each do |accessory|
+                            .panel
+                                -if accessory.accessory_product.photos.length>0
+                                    .logo
+                                        .img-wrapper
+                                            = image_tag accessory.accessory_product.photos[0].image.url(:medium)
+                                - else
+                                    .logo
+                                        .img-wrapper
+                                            = image_tag "/images/default_image240x240.jpg"
+                                %footer
+                                    = link_to accessory.accessory_product.name, accessory.accessory_product
+                                - if accessory.accessory_product.price.present?
+                                    .price-old
+                                        .uah.label{:class=>"#{'alert' if accessory.discount.present?}"}
+                                            = accessory.accessory_product.price.price.exchange_to("UAH")
+                                            грн.
+
+                                        .usd.label{:class=>"#{'alert' if accessory.discount.present?}"}
+                                            = humanized_money_with_symbol accessory.accessory_product.price.price
+                                    - if accessory.discount.present?
+                                        %header
+                                            Спеціальна ціна
+                                        .price-new
+                                            .uah.label.success
+                                                = accessory.discount_price.exchange_to("UAH")
+                                                грн.
+
+                                            .usd.label.success
+                                                = humanized_money_with_symbol accessory.discount_price
